@@ -4,12 +4,10 @@ import cv2
 
 
 # cap = cv2.VideoCapture(0)
-
 img1=cv2.imread('./Pictures/object.jpg',0)
 outimg=np.zeros_like(img1)
 
 orb=cv2.ORB_create()
-
 
 # while True:
 kp1, des1 = orb.detectAndCompute(img1,None)
@@ -17,13 +15,13 @@ frame=cv2.imread('./Pictures/whole.jpg')# _,frame = cap.read()
 img2 = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
 kp2, des2 = orb.detectAndCompute(img2,None)
-# create BFMatcher object
+## create BFMatcher object
 bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
-# Match descriptors.
+## Match descriptors.
 matches = bf.match(des1,des2)
 
-# Sort them in the order of their distance.
+## Sort them in the order of their distance.
 matches = sorted(matches, key = lambda x:x.distance)
 L=len(matches)
 
@@ -32,7 +30,7 @@ if L>30:
 else:
 	x=0.5
 
-n=int(x*L)	# Number of top matches to consider
+n=int(x*L)	## Number of top matches to consider
 
 mat=matches[:n]
 good=[]
@@ -54,6 +52,7 @@ draw_params = dict(matchColor = (0,255,0), # draw matches in green color
                    matchesMask = matchesMask, # draw only inliers
                    flags = 2)
 
+## To draw the matched keypoints between the images
 # img4 = cv2.drawMatches(img1,kp1,img2,kp2,good,None,**draw_params)
 
 cv2.namedWindow('Matched Image', cv2.WINDOW_NORMAL)
